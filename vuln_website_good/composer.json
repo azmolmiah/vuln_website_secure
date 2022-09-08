@@ -1,0 +1,15 @@
+{
+    "name": "azmol/vuln_website_good",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "azmolmiah",
+            "email": "azmol.miah.general@gmail.com"
+        }
+    ],
+    "require": {}
+}
