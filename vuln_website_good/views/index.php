@@ -3,7 +3,7 @@
     <div class="row" style="height: 50vh;">
         <div class="col-md-6 animate__animated animate__fadeInLeft">
             <h1 class="display-4 fw-normal">Good Practice</h1>
-            <p class="lead fw-normal mt-3">Welcome to codeEfficiently's vulnerable shop good version. Explore the full website, follow the documentation page, find the vulnerabilities and secure them using the documentation.</p>
+            <p class="lead fw-normal mt-3">Welcome to codeEfficiently's vulnerable shop good version. Explore the full website, find the vulnerabilities and secure them using research.</p>
             <a class="btn btn-outline-success mt-5" href="/products">Explore</a>
         </div>
         <div class="col-md-6">
@@ -19,7 +19,7 @@
 </div>
 <div class="row">
     <?php foreach ($products as $product) : ?>
-        <div class="col-xs-1 col-sm-6 col-md-3 mt-4 wow animate__animated animate__fadeInLeft">
+        <div class="col-xs-1 col-sm-6 col-md-4 mt-4 wow animate__animated animate__fadeInLeft">
             <div class="card">
                 <div class="card-body position-relative">
                     <img src="<?php echo $product['image']; ?>" class="card-img-top" style="max-height: 400px; min-height: 400px;" alt="...">
@@ -28,7 +28,7 @@
                     </span>
                     <h3 class="card-title mt-2"><?php echo $product['title']; ?></h3>
                     <p class="card-text">£<?php echo $product['price']; ?></p>
-                    <a class="btn btn-outline-primary" href="product.php?id=<?php echo $product['id']; ?>"><i class="fas fa-eye"></i> View Details</a>
+                    <a class="btn btn-outline-primary" href="/product?id=<?php echo $product['id']; ?>"><i class="fas fa-eye"></i> View Details</a>
                 </div>
             </div>
         </div>

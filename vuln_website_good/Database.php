@@ -3,6 +3,7 @@
 namespace app;
 
 use PDO;
+use app\controllers\MainController;
 
 class Database
 {
@@ -15,19 +16,27 @@ class Database
 
     public function getFeaturedProducts()
     {
-        $statement = $this->pdo->prepare('SELECT * FROM products ORDER BY created_at DESC LIMIT 4');
+        $statement = $this->pdo->prepare('SELECT * FROM products ORDER BY created_at DESC LIMIT 3');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getAllProducts($search = '')
+    public function getAllProducts($search = '', $category = '')
     {
-        $queryAndResults = ['query' => '', 'products' => ''];
+        $queryAndResults = [
+            'query' => '',
+            'products' => ''
+        ];
+
         if ($search) {
             $statement = $this->pdo->prepare('SELECT * FROM products WHERE title LIKE :title OR description LIKE :description');
             $statement->bindValue(':title', "%$search%");
             $statement->bindValue(':description', "%$search%");
             $queryAndResults['query'] = "SELECT * FROM products WHERE title LIKE $search OR description LIKE $search";
+        } elseif ($category) {
+            $statement = $this->pdo->prepare('SELECT * FROM products WHERE cat_id = :categoryId');
+            $statement->bindValue(':categoryId', $category);
+            $queryAndResults['query'] = "SELECT * FROM products WHERE cat_id = $category";
         } else {
             $statement = $this->pdo->prepare('SELECT * FROM products');
             $queryAndResults['query'] = 'SELECT * FROM products';
@@ -36,5 +45,38 @@ class Database
         $statement->execute();
         $queryAndResults['products'] = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $queryAndResults;
+    }
+
+    public function getSingleProduct($id)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM products WHERE id = :id');
+        $statement->bindValue(':id', $id);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCartProducts($key)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM products WHERE id = :key');
+        $statement->bindValue(':key', $key);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCategories()
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM categories');
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function login($username, $password)
+    {
+        session_start();
+        $statement = $this->pdo->prepare('SELECT * FROM customers WHERE username = :username AND password = :password LIMIT 1');
+        $statement->bindValue(':username', $username);
+        $statement->bindValue(':password', $password);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }

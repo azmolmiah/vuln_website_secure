@@ -17,7 +17,7 @@
                     <h4 class="my-0 fw-normal">SQL Query</h4>
                 </div>
                 <div class="card-body">
-                    <p class="card-title pricing-card-title"><code><?php echo $query == '' ? "SELECT * FROM products WHERE title LIKE '%search_query_variable%' OR description LIKE '%search_query_variable%'" : $query; ?></code></p>
+                    <p class="card-title pricing-card-title"><code><?php echo $query; ?></code></p>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                     <h4 class="my-0 fw-normal">SQL Results</h4>
                 </div>
                 <div class="card-body">
-                    <p class="card-title pricing-card-title"><code><?php !$search ? '' : var_dump($products); ?></code></p>
+                    <p class="card-title pricing-card-title"><code><?php $search || $categories ? var_dump($products) : ''; ?></code></p>
                 </div>
             </div>
         </div>
@@ -37,6 +37,18 @@
 <div class="row" id="products">
     <div class="d-flex justify-content-between align-items-center mt-5">
         <h1>All Products</h1>
+        <form id="filterCategory">
+            <select onchange="filterCategory()" name="cat_id" class="form-select" form="filterCategory">
+                <option value="">All Categories</option>
+                <?php foreach ($categories as $category) : ?>
+                    <?php if ($category['cat_id'] == $_GET['cat_id']) : ?>
+                        <option value="<?php echo $category['cat_id']; ?>" selected><?php echo $category['cat_name']; ?></option>
+                    <?php else : ?>
+                        <option value="<?php echo $category['cat_id']; ?>"><?php echo $category['cat_name']; ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+        </form>
     </div>
     <?php foreach ($products as $product) : ?>
         <div class="col-md-4 col-sm-1 mb-4 mt-4 wow animate__animated animate__fadeIn">
@@ -48,7 +60,7 @@
                     </span>
                     <h3 class="card-title mt-2"><?php echo $product['title']; ?></h3>
                     <p class="card-text">£<?php echo $product['price']; ?></p>
-                    <a class="btn btn-outline-primary" href="product.php?id=<?php echo $product['id']; ?>"><i class="fas fa-eye"></i> Details</a>
+                    <a class="btn btn-outline-primary" href="/product?id=<?php echo $product['id']; ?>"><i class="fas fa-eye"></i> Details</a>
                 </div>
             </div>
         </div>
