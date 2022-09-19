@@ -34,7 +34,7 @@
                 <li class="nav-item dropdown">
                     <button class="btn btn-outline-primary" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <i class="fas fa-shopping-cart"></i> <span class="badge rounded-pill bg-danger"><?php echo $count; ?></span>
+                        <i class="fas fa-shopping-cart"></i> <span class="badge rounded-pill bg-danger"><?php echo $count ?? null; ?></span>
                     </button>
                     <div class="dropdown-menu p-3" aria-labelledby="navbarDropdown" style="min-width: 20rem;">
                         <?php if ($count != 0) : ?>
@@ -47,7 +47,7 @@
                             <strong>Total: £<?php echo $total; ?></strong>
                         </div>
                         <hr>
-                        <a href="cart.php" class="btn btn-outline-primary w-100">Cart</a>
+                        <a href="/cart" class="btn btn-outline-primary w-100">Cart</a>
                     </div>
                 </li>
             </ul>

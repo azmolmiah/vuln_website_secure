@@ -4,6 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use app\Router;
 use app\controllers\MainController;
+use app\controllers\CartController;
 
 $router = new Router();
 
@@ -12,6 +13,11 @@ $router->get('/products',  [MainController::class, 'products']);
 $router->get('/product',  [MainController::class, 'product']);
 $router->get('/login',  [MainController::class, 'login']);
 $router->get('/register',  [MainController::class, 'register']);
-$router->get('/admin', MainController::class, 'admin');
+$router->get('/cart', [MainController::class, 'cart']);
+$router->get('/admin', [MainController::class, 'admin']);
+
+$router->get('/add-to-cart', [CartController::class, 'addToCart']);
+
+
 
 $router->resolve();

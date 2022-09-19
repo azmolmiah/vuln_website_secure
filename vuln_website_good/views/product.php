@@ -13,7 +13,7 @@
             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
         </div>
         <h3 class="mt-2 mb-5">£<?php echo $product['price']; ?></h3>
-        <form action="addtocart.php" method="GET">
+        <form action="/add-to-cart">
             <div class="form-floating mb-3">
                 <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
                 <input type="number" name="quantity" class="form-control w-25" value="1" id="quantity">

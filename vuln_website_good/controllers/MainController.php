@@ -3,32 +3,15 @@
 namespace app\controllers;
 
 use app\Router;
+// use app\controllers\CartController;
 
 class MainController
 {
-    public static $cart;
-    public static $total = 0;
-    public static $count;
-    public static $product;
-
-    public function __construct(Router $router)
-    {
-        self::$cart = $_SESSION['cart'] ?? null;
-        self::$count = count(self::$cart);
-
-        foreach (self::$cart as $key => $value) {
-            self::$product = $router->db->getCartProducts($key);
-            self::$total += self::$product['price'] * $value['quantity'];
-        }
-    }
-
     public static function index(Router $router)
     {
         $products = $router->db->getFeaturedProducts();
         $router->renderView('index', [
-            'products' => $products,
-            'total' => self::$total,
-            'count' => self::$count
+            'products' => $products
         ]);
     }
 
@@ -43,23 +26,18 @@ class MainController
             'products' => $queryAndResult['products'],
             'query' => $queryAndResult['query'],
             'search' => $search,
-            'categories' => $categories,
-            'count' => self::$count,
-            'total' => self::$total
+            'categories' => $categories
         ]);
     }
 
     public static function product(Router $router)
     {
         $id = $_GET['id'] ?? null;
+
         $product =  $router->db->getSingleProduct($id);
-        // echo '<pre>';
-        // var_dump($product[0]);
-        // echo '</pre>';
+
         $router->renderView('product', [
-            'product' => $product[0],
-            'count' => self::$count,
-            'total' => self::$total
+            'product' => $product[0]
         ]);
     }
 
@@ -81,15 +59,25 @@ class MainController
 
         $router->renderView('login', [
             'message' => $message,
-            'isLoggedIn' => $isLoggedIn,
-            'count' => self::$count,
-            'total' => self::$total
+            'isLoggedIn' => $isLoggedIn
         ]);
     }
 
     public static function register()
     {
         echo 'Register Page';
+    }
+
+    public static function cart(Router $router)
+    {
+        session_start();
+        $cart = $_SESSION['cart'] ?? null;
+        $count = count($cart);
+
+        $router->renderView('cart', [
+            'cart' => $cart,
+            'count' => $count
+        ]);
     }
 
     public static function admin()
