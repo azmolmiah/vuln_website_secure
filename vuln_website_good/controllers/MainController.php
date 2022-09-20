@@ -81,6 +81,10 @@ class MainController
             array_push($cartProducts, $router->db->getCartProducts($key) + $value);
         }
 
+        foreach ($cartProducts as $cartProduct) {
+            $total += $cartProduct['price'] * $cartProduct['quantity'];
+        }
+
         $router->renderView('cart', [
             'cart' => $cart,
             'count' => $count,
