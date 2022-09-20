@@ -31,11 +31,11 @@ class CartController
 
             $_SESSION['cart'][$id] = array('quantity' => $quantity);
 
-            echo '<pre>';
-            var_dump($_SESSION['cart'] ?? null);
-            echo '</pre>';
+            // echo '<pre>';
+            // var_dump($_SESSION['cart'] ?? null);
+            // echo '</pre>';
 
-            exit;
+            // exit;
 
             header('Location: /cart');
         }

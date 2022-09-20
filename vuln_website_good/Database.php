@@ -60,7 +60,7 @@ class Database
         $statement = $this->pdo->prepare('SELECT * FROM products WHERE id = :key');
         $statement->bindValue(':key', $key);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
     public function getCategories()

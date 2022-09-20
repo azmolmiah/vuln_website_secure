@@ -72,11 +72,20 @@ class MainController
     {
         session_start();
         $cart = $_SESSION['cart'] ?? null;
-        $count = count($cart);
+        $count = $cart ? count($cart) : 0;
+        $total = 0;
+
+        $cartProducts = array();
+
+        foreach ($cart as $key => $value) {
+            array_push($cartProducts, $router->db->getCartProducts($key) + $value);
+        }
 
         $router->renderView('cart', [
             'cart' => $cart,
-            'count' => $count
+            'count' => $count,
+            'products' => $cartProducts,
+            'total' => $total
         ]);
     }
 
