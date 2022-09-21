@@ -34,10 +34,21 @@
                 <li class="nav-item dropdown">
                     <button class="btn btn-outline-primary" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <i class="fas fa-shopping-cart"></i> <span class="badge rounded-pill bg-danger"><?php echo $count ?? null; ?></span>
+                        <i class="fas fa-shopping-cart"></i> <span class="badge rounded-pill bg-danger"><?php echo $count; ?></span>
                     </button>
                     <div class="dropdown-menu p-3" aria-labelledby="navbarDropdown" style="min-width: 20rem;">
                         <?php if ($count != 0) : ?>
+                            <?php foreach ($cartProducts as $cartProduct) : ?>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <img class="mx-auto" src="<?php echo $cartProduct['image']; ?>" alt="" style="width:50px;height:55px;">
+                                    </div>
+                                    <div class="col-9">
+                                        <span><a href="product.php?id=<?php echo $cartProduct['id']; ?>"><?php echo $cartProduct['title']; ?></a></span><br>
+                                        <small class="text-info">£<?php echo $cartProduct['price']; ?> </small><span> <small>Quantity:<?php echo $cartProduct['quantity']; ?></small></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         <?php else : ?>
                             <h5>The cart is empty!</h5>
                         <?php endif; ?>

@@ -14,17 +14,17 @@
     </thead>
     <tbody>
         <?php if ($count != 0) :  ?>
-            <?php foreach ($products as $product) : ?>
+            <?php foreach ($cartProducts as $cartProduct) : ?>
 
                 <tr>
-                    <td><?php echo $product['id']; ?></td>
-                    <td><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['title']; ?>" style="width:50px;height:55px;"></td>
-                    <td><a href="/product?id=<?php echo $product['id']; ?>"><?php echo $product['title']; ?></a></td>
-                    <td>£<?php echo $product['price']; ?></td>
-                    <td><?php echo $product['quantity']; ?></td>
-                    <td>£<?php echo $product['price'] * $product['quantity']; ?></td>
+                    <td><?php echo $cartProduct['id']; ?></td>
+                    <td><img src="<?php echo $cartProduct['image']; ?>" alt="<?php echo $cartProduct['title']; ?>" style="width:50px;height:55px;"></td>
+                    <td><a href="/product?id=<?php echo $cartProduct['id']; ?>"><?php echo $cartProduct['title']; ?></a></td>
+                    <td>£<?php echo $cartProduct['price']; ?></td>
+                    <td><?php echo $cartProduct['quantity']; ?></td>
+                    <td>£<?php echo $cartProduct['price'] * $cartProduct['quantity']; ?></td>
                     <!-- Fix the delete from cart -->
-                    <td><a href="/deletefromcart?id=<?php echo $product['id']; ?>" class="btn btn-outline-danger">Remove</a></td>
+                    <td><a href="/deletefromcart?id=<?php echo $cartProduct['id']; ?>" class="btn btn-outline-danger">Remove</a></td>
                 </tr>
 
             <?php endforeach; ?>

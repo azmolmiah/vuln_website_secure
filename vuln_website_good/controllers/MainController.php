@@ -7,11 +7,37 @@ use app\Router;
 
 class MainController
 {
+    public static $cart;
+    public static $count;
+    public static $total = 0;
+    public static $cartProducts = array();
+
+    public static function getCartProducts($router)
+    {
+        session_start();
+
+        self::$cart = $_SESSION['cart'] ?? [];
+        self::$count = count(self::$cart);
+
+        foreach (self::$cart as $key => $value) {
+            array_push(self::$cartProducts, $router->db->getCartProducts($key) + $value);
+        }
+
+        foreach (self::$cartProducts as $cartProduct) {
+            self::$total += $cartProduct['price'] * $cartProduct['quantity'];
+        }
+    }
+
     public static function index(Router $router)
     {
+        self::getCartProducts($router);
+
         $products = $router->db->getFeaturedProducts();
         $router->renderView('index', [
-            'products' => $products
+            'products' => $products,
+            'count' => self::$count,
+            'total' => self::$total,
+            'cartProducts' => self::$cartProducts
         ]);
     }
 
@@ -20,13 +46,18 @@ class MainController
         $search = $_GET['search'] ?? '';
         $category = $_GET['cat_id'] ?? '';
 
+        self::getCartProducts($router);
+
         $queryAndResult = $router->db->getAllProducts($search, $category);
         $categories = $router->db->getCategories();
         $router->renderView('products', [
             'products' => $queryAndResult['products'],
             'query' => $queryAndResult['query'],
             'search' => $search,
-            'categories' => $categories
+            'categories' => $categories,
+            'count' => self::$count,
+            'total' => self::$total,
+            'cartProducts' => self::$cartProducts
         ]);
     }
 
@@ -36,8 +67,13 @@ class MainController
 
         $product =  $router->db->getSingleProduct($id);
 
+        self::getCartProducts($router);
+
         $router->renderView('product', [
-            'product' => $product[0]
+            'product' => $product[0],
+            'total' => self::$total,
+            'count' => self::$count,
+            'cartProducts' => self::$cartProducts
         ]);
     }
 
@@ -70,26 +106,13 @@ class MainController
 
     public static function cart(Router $router)
     {
-        session_start();
-        $cart = $_SESSION['cart'] ?? null;
-        $count = $cart ? count($cart) : 0;
-        $total = 0;
-
-        $cartProducts = array();
-
-        foreach ($cart as $key => $value) {
-            array_push($cartProducts, $router->db->getCartProducts($key) + $value);
-        }
-
-        foreach ($cartProducts as $cartProduct) {
-            $total += $cartProduct['price'] * $cartProduct['quantity'];
-        }
+        self::getCartProducts($router);
 
         $router->renderView('cart', [
-            'cart' => $cart,
-            'count' => $count,
-            'products' => $cartProducts,
-            'total' => $total
+            'cart' => self::$cart,
+            'count' => self::$count,
+            'cartProducts' => self::$cartProducts,
+            'total' => self::$total
         ]);
     }
 
