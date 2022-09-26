@@ -72,7 +72,6 @@ class Database
 
     public function login($username, $password)
     {
-        session_start();
         $statement = $this->pdo->prepare('SELECT * FROM customers WHERE username = :username AND password = :password LIMIT 1');
         $statement->bindValue(':username', $username);
         $statement->bindValue(':password', $password);

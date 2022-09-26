@@ -2,14 +2,29 @@
 
 namespace app\controllers;
 
-use app\Router;
-
-
 class CartController
 {
-    public $total;
-    public $cart;
-    public $count;
+    public static $cart;
+    public static $count;
+    public static $total = 0;
+    public static $cartProducts = array();
+
+    // Move to cart controller
+    public static function getCartProducts($router)
+    {
+        session_start();
+
+        self::$cart = $_SESSION['cart'] ?? [];
+        self::$count = count(self::$cart);
+
+        foreach (self::$cart as $key => $value) {
+            array_push(self::$cartProducts, $router->db->getCartProducts($key) + $value);
+        }
+
+        foreach (self::$cartProducts as $cartProduct) {
+            self::$total += $cartProduct['price'] * $cartProduct['quantity'];
+        }
+    }
 
     public static function addToCart()
     {
@@ -18,24 +33,15 @@ class CartController
         $id = $_GET['id'] ?? null;
         $quantity = $_GET['quantity'] ?? null;
 
-        // if (isset($_GET['id'])) {
         if ($id) {
 
-            // if (isset($_GET['quantity'])) {
             if ($quantity) {
                 $quantity = $quantity;
             } else {
                 $quantity = 1;
             }
-            // $id = $_GET['id'];
 
             $_SESSION['cart'][$id] = array('quantity' => $quantity);
-
-            // echo '<pre>';
-            // var_dump($_SESSION['cart'] ?? null);
-            // echo '</pre>';
-
-            // exit;
 
             header('Location: /cart');
         }

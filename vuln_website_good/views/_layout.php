@@ -44,8 +44,8 @@
                                         <img class="mx-auto" src="<?php echo $cartProduct['image']; ?>" alt="" style="width:50px;height:55px;">
                                     </div>
                                     <div class="col-9">
-                                        <span><a href="product.php?id=<?php echo $cartProduct['id']; ?>"><?php echo $cartProduct['title']; ?></a></span><br>
-                                        <small class="text-info">£<?php echo $cartProduct['price']; ?> </small><span> <small>Quantity:<?php echo $cartProduct['quantity']; ?></small></span>
+                                        <span><a href="/product?id=<?php echo $cartProduct['id']; ?>"><?php echo $cartProduct['title']; ?></a></span><br>
+                                        <small class="text-info">£<?php echo $cartProduct['price']; ?> </small> <small>Quantity: <?php echo $cartProduct['quantity']; ?></small>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

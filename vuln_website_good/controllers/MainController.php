@@ -3,117 +3,116 @@
 namespace app\controllers;
 
 use app\Router;
-// use app\controllers\CartController;
+use app\controllers\CartController;
+use app\controllers\AuthController;
 
 class MainController
 {
-    public static $cart;
-    public static $count;
-    public static $total = 0;
-    public static $cartProducts = array();
-
-    public static function getCartProducts($router)
-    {
-        session_start();
-
-        self::$cart = $_SESSION['cart'] ?? [];
-        self::$count = count(self::$cart);
-
-        foreach (self::$cart as $key => $value) {
-            array_push(self::$cartProducts, $router->db->getCartProducts($key) + $value);
-        }
-
-        foreach (self::$cartProducts as $cartProduct) {
-            self::$total += $cartProduct['price'] * $cartProduct['quantity'];
-        }
-    }
-
     public static function index(Router $router)
     {
-        self::getCartProducts($router);
+        CartController::getCartProducts($router);
 
         $products = $router->db->getFeaturedProducts();
+
         $router->renderView('index', [
             'products' => $products,
-            'count' => self::$count,
-            'total' => self::$total,
-            'cartProducts' => self::$cartProducts
+            'count' => CartController::$count,
+            'total' => CartController::$total,
+            'cartProducts' => CartController::$cartProducts
         ]);
     }
 
     public static function products(Router $router)
     {
+        CartController::getCartProducts($router);
+
         $search = $_GET['search'] ?? '';
         $category = $_GET['cat_id'] ?? '';
-
-        self::getCartProducts($router);
-
         $queryAndResult = $router->db->getAllProducts($search, $category);
         $categories = $router->db->getCategories();
+
         $router->renderView('products', [
             'products' => $queryAndResult['products'],
             'query' => $queryAndResult['query'],
             'search' => $search,
             'categories' => $categories,
-            'count' => self::$count,
-            'total' => self::$total,
-            'cartProducts' => self::$cartProducts
+            'count' => CartController::$count,
+            'total' => CartController::$total,
+            'cartProducts' => CartController::$cartProducts
         ]);
     }
 
     public static function product(Router $router)
     {
+        CartController::getCartProducts($router);
+
         $id = $_GET['id'] ?? null;
-
         $product =  $router->db->getSingleProduct($id);
-
-        self::getCartProducts($router);
 
         $router->renderView('product', [
             'product' => $product[0],
-            'total' => self::$total,
-            'count' => self::$count,
-            'cartProducts' => self::$cartProducts
+            'total' => CartController::$total,
+            'count' => CartController::$count,
+            'cartProducts' => CartController::$cartProducts
         ]);
     }
 
     public static function login(Router $router)
     {
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
-        $message = '';
+        CartController::getCartProducts($router);
 
-        $isLoggedIn = $router->db->login($username, $password);
+        // if (AuthController::$loggedInUser) {
+        //     $_SESSION['customer'] = AuthController::$username;
+        //     $_SESSION['customerId'] = AuthController::$loggedInUser[0]['id'];
 
-        // if ($isLoggedIn) {
-        //     $_SESSION['customer'] = $username;
-        //     $_SESSION['customerId'] = $isLoggedIn['id'];
 
+        //     if (isset($_GET['redirect']) && $_GET['redirect'] == 'docs') {
+        //         // Login redirect to the documentation
+        //         header('Location: /docs');
+        //     } elseif (isset($_GET['redirect']) && $_GET['redirect'] == 'checkout') {
+        //         // Login redirect to the checkout
+        //         header('Location:/checkout');
+        //     } else {
+        //         header('Location: /myaccount');
+        //     }
         // } else {
-        //     $message = 'The username or password is incorrect!';
+        //     AuthController::$message = 'The username or password is incorrect!';
         // }
 
         $router->renderView('login', [
-            'message' => $message,
-            'isLoggedIn' => $isLoggedIn
+            'message' => AuthController::$message,
+            'total' => CartController::$total,
+            'count' => CartController::$count,
+            'cartProducts' => CartController::$cartProducts
         ]);
     }
 
-    public static function register()
+    public static function register(Router $router)
     {
-        echo 'Register Page';
+        CartController::getCartProducts($router);
+
+        $router->renderView('register', [
+            'total' => CartController::$total,
+            'count' => CartController::$count,
+            'cartProducts' => CartController::$cartProducts
+        ]);
     }
 
     public static function cart(Router $router)
     {
-        self::getCartProducts($router);
+        CartController::getCartProducts($router);
 
         $router->renderView('cart', [
-            'cart' => self::$cart,
-            'count' => self::$count,
-            'cartProducts' => self::$cartProducts,
-            'total' => self::$total
+            'cart' => CartController::$cart,
+            'count' => CartController::$count,
+            'cartProducts' => CartController::$cartProducts,
+            'total' => CartController::$total
         ]);
+    }
+
+    public static function checkout()
+    {
+        echo 'Checkout Page';
     }
 
     public static function admin()
