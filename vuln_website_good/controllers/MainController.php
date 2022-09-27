@@ -79,8 +79,21 @@ class MainController
         //     AuthController::$message = 'The username or password is incorrect!';
         // }
 
+        // echo '<pre>';
+        // var_dump(AuthController::$username);
+        // echo '</pre>';
+
+        // if (self::$username === '' && $password === '') {
+        //     self::$message = 'Please enter your username and password';
+        // } else if (self::$username === '') {
+        //     self::$message = 'Please enter your username';
+        // } elseif ($password === '') {
+        //     self::$message = 'Please enter your password';
+        // }
+
         $router->renderView('login', [
             'message' => AuthController::$message,
+            'username' => AuthController::$username,
             'total' => CartController::$total,
             'count' => CartController::$count,
             'cartProducts' => CartController::$cartProducts

@@ -14,7 +14,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="form-floating mb-3">
-                    <input type="text" name="username" class="form-control" id="floatingInput">
+                    <input type="text" name="username" class="form-control" id="floatingInput" value="<?php echo $username; ?>">
                     <label for="floatingInput">Username</label>
                 </div>
                 <div class="form-floating mb-3">

@@ -7,27 +7,35 @@ use app\Router;
 class AuthController
 {
     public static $message = '';
+    public static $username;
 
-    public static function validateLogin(Router $router)
+    public static function auth(Router $router)
     {
-        $username = $_POST['username'] ?? null;
+        session_start();
+
+        self::$username = $_POST['username'] ?? null;
         $password = $_POST['password'] ?? null;
 
-        $loggedInUser = $router->db->login($username, $password);
+        $loggedInUser = $router->db->login(self::$username, $password);
 
         if ($loggedInUser) {
-            $_SESSION['customer'] = $username;
+            $_SESSION['customer'] = self::$username;
             $_SESSION['customerId'] = $loggedInUser[0]['id'];
-            header('Location: /checkout');
-            exit;
-        } else {
-            if ($username === '' && $password === '') {
-                self::$message = 'Please enter your username and password';
-            } else if ($username === '') {
-                self::$message = 'Please enter your username';
-            } elseif ($password === '') {
-                self::$message = 'Please enter your password';
+
+            // Redirect
+            if (isset($_GET['redirect']) && $_GET['redirect'] == 'docs') {
+                // Login redirect to the documentation
+                header('Location: /docs');
+                exit;
+            } elseif (isset($_GET['redirect']) && $_GET['redirect'] == 'checkout') {
+                // Login redirect to the checkout
+                header('Location: /checkout');
+                exit;
+            } else {
+                header('Location: /myaccount');
+                exit;
             }
+        } else {
             header('Location: /login');
             exit;
         }

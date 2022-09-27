@@ -23,7 +23,7 @@ $router->get('/checkout', [MainController::class, 'checkout']);
 
 // Actions controllers
 $router->get('/add-to-cart', [CartController::class, 'addToCart']);
-$router->post('/auth', [AuthController::class, 'validateLogin']);
+$router->post('/auth', [AuthController::class, 'auth']);
 
 
 $router->resolve();
