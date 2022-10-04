@@ -8,15 +8,16 @@ class AuthController
 {
     public static $message = '';
     public static $username;
+    public static $password;
 
     public static function auth(Router $router)
     {
         session_start();
 
         self::$username = $_POST['username'] ?? null;
-        $password = $_POST['password'] ?? null;
+        self::$password = $_POST['password'] ?? null;
 
-        $loggedInUser = $router->db->login(self::$username, $password);
+        $loggedInUser = $router->db->login(self::$username, self::$password);
 
         if ($loggedInUser) {
             $_SESSION['customer'] = self::$username;
