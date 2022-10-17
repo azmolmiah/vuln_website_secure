@@ -123,7 +123,7 @@ h6 {
 }
 
 #topbar .bi::before {
-  padding: 10px !important;
+  padding: 5px !important;
 }
 
 #header {
@@ -472,6 +472,24 @@ h6 {
   animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
 
+#hero .robot-speech {
+  position: absolute;
+  top: 200px;
+}
+
+#hero .robot-speech::before {
+ content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: auto;
+	right: -20px;
+  top: 38px;
+	bottom: auto;
+	border: 12px solid;
+	border-color: #212529 transparent transparent #212529;
+}
+
 @media (max-width: 991px) {
   #hero {
     height: 100vh;
@@ -681,53 +699,53 @@ section {
 /*--------------------------------------------------------------
 # Why Us
 --------------------------------------------------------------*/
-.why-us .content {
+.courses .content {
   padding: 60px 100px 0 100px;
 }
 
-.why-us .content h3 {
+.courses .content h3 {
   font-weight: 400;
   font-size: 34px;
   color: #37517e;
 }
 
-.why-us .content h4 {
+.courses .content h4 {
   font-size: 20px;
   font-weight: 700;
   margin-top: 5px;
 }
 
-.why-us .content p {
+.courses .content p {
   font-size: 15px;
   color: #848484;
 }
 
-.why-us .img {
+.courses .img {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
-.why-us .accordion-list {
+.courses .accordion-list {
   padding: 0 100px 60px 100px;
 }
 
-.why-us .accordion-list ul {
+.courses .accordion-list ul {
   padding: 0;
   list-style: none;
 }
 
-.why-us .accordion-list li+li {
+.courses .accordion-list li+li {
   margin-top: 15px;
 }
 
-.why-us .accordion-list li {
+.courses .accordion-list li {
   padding: 20px;
   background: #fff;
   border-radius: 4px;
 }
 
-.why-us .accordion-list a {
+.courses .accordion-list a {
   display: block;
   position: relative;
   font-family: "Poppins", sans-serif;
@@ -739,70 +757,88 @@ section {
   cursor: pointer;
 }
 
-.why-us .accordion-list span {
+.courses .accordion-list span {
   color: #47b2e4;
   font-weight: 600;
   font-size: 18px;
   padding-right: 10px;
 }
 
-.why-us .accordion-list i {
+.courses .accordion-list i {
   font-size: 24px;
   position: absolute;
   right: 0;
   top: 0;
 }
 
-.why-us .accordion-list p {
+.courses .accordion-list p {
   margin-bottom: 0;
   padding: 10px 0 0 0;
 }
 
-.why-us .accordion-list .icon-show {
+.courses .accordion-list .icon-show {
   display: none;
 }
 
-.why-us .accordion-list a.collapsed {
+.courses .accordion-list a.collapsed {
   color: #343a40;
 }
 
-.why-us .accordion-list a.collapsed:hover {
+.courses .accordion-list a.collapsed:hover {
   color: #47b2e4;
 }
 
-.why-us .accordion-list a.collapsed .icon-show {
+.courses .accordion-list a.collapsed .icon-show {
   display: inline-block;
 }
 
-.why-us .accordion-list a.collapsed .icon-close {
+.courses .accordion-list a.collapsed .icon-close {
   display: none;
+}
+
+.courses .courses-btn {
+  display: inline-block;
+  padding: 12px 35px;
+  border-radius: 50px;
+  color: rgb(71, 178, 228);
+  font-size: 16px;
+  font-weight: 500;
+  font-family: Jost, sans-serif;
+  transition: all 0.3s ease 0s;
+  border: 1px solid rgb(71, 178, 228);
+  background: none;
+}
+
+.courses .courses-btn:hover {
+  background: rgb(71, 178, 228);
+  color: rgb(255, 255, 255);
 }
 
 @media (max-width: 1024px) {
 
-  .why-us .content,
-  .why-us .accordion-list {
+  .courses .content,
+  .courses .accordion-list {
     padding-left: 0;
     padding-right: 0;
   }
 }
 
 @media (max-width: 992px) {
-  .why-us .img {
+  .courses .img {
     min-height: 400px;
   }
 
-  .why-us .content {
+  .courses .content {
     padding-top: 30px;
   }
 
-  .why-us .accordion-list {
+  .courses .accordion-list {
     padding-bottom: 30px;
   }
 }
 
 @media (max-width: 575px) {
-  .why-us .img {
+  .courses .img {
     min-height: 200px;
   }
 }
@@ -1423,6 +1459,24 @@ section {
 
 .faq .faq-list a.collapsed .icon-close {
   display: none;
+}
+
+.faq .faq-btn {
+  display: inline-block;
+  padding: 12px 35px;
+  border-radius: 50px;
+  color: rgb(71, 178, 228);
+  font-size: 16px;
+  font-weight: 500;
+  font-family: Jost, sans-serif;
+  transition: all 0.3s ease 0s;
+  border: 1px solid rgb(71, 178, 228);
+  background: none;
+}
+
+.faq .faq-btn:hover {
+  background: rgb(71, 178, 228);
+  color: rgb(255, 255, 255);
 }
 
 @media (max-width: 1200px) {
